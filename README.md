@@ -6,7 +6,7 @@ This repo contains the definitions and scripts to build `sysroot` packages for `
 A matching text article for this repository can be found on my website: [Sysroot package generation for use with toolchains_llvm](https://steven.casagrande.io/articles/sysroot-generation-toolchains-llvm)
 
 The source here is based off of [the sysroot generation code in gcc-toolchain](https://github.com/f0rmiga/gcc-toolchain/tree/main/sysroot),
-authored by @f0rmiga .
+authored by [@f0rmiga](https://github.com/f0rmiga).
 
 Modifications have been made to:
 - generate a valid sysroot package for use with toolchains_llvm instead of [gcc-toolchain](https://github.com/f0rmiga/gcc-toolchain)
