@@ -40,7 +40,7 @@ fi
 
 echo "INFO: building sysroot inside container..."
 
-sysroot_dir="$(git rev-parse --show-toplevel)/sysroot"
+sysroot_dir="$(git rev-parse --show-toplevel)"
 output=$(realpath "${output_dir}/sysroot-${variant}-${arch}.tar.xz")
 image_tag=$(tr '[:upper:]' '[:lower:]' <<<"sysroot-${variant}-${arch}")
 
