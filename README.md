@@ -39,17 +39,17 @@ is not supported at this time.
 The entrypoint is `build.sh` that takes three args:
 
 - The target architecture (`x86_64` or `aarch64`)
-- The output directory path for the generated `.tar.xz` file
+- The output directory path for the generated `.tar.zst` file
 - The target "variant". One of:
   - `base`, containing just the kernel, glibc, and libstdc++ files
   - `ssl`, containing `base` plus `openssl` and `cyrus-sasl` from a RHEL-UBI 8 container
 
 ```shell
-./build.sh x86_64 . ssl
-./build.sh aarch64 . ssl
+./build.sh x86_64 . base
+./build.sh aarch64 . base
 ```
 
-In the end you'll have a compressed size of ~55MB for x86_64 and ~35MB for aarch64.
+In the end you'll have a compressed size of ~55MB for x86_64 and ~37MB for aarch64.
 
 ### Using the sysroot package with toolchains_llvm
 

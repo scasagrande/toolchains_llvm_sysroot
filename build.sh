@@ -4,6 +4,7 @@
 # Original authors: Thulio Ferraz Assis (thulio@aspect.dev), Aspect.dev
 #
 # Copyright (c) Thulio Ferraz Assis 2024
+# Modifications Copyright (c) Steven Casagrande 2025
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -38,10 +39,20 @@ if [ -z "${variant}" ]; then
     exit 1
 fi
 
+# Test for tool to generate sha 256 values
+if [ -x "$(command -v shasum)" ]; then
+    SHASUM="shasum -a 256"
+elif [ -x "$(command -v sha256sum)" ]; then
+    SHASUM="sha256sum"
+else
+    >&2 echo "Missing tool for calculating sha 256 values"
+    exit 1
+fi
+
 echo "INFO: building sysroot inside container..."
 
 sysroot_dir="$(git rev-parse --show-toplevel)"
-output=$(realpath "${output_dir}/sysroot-${variant}-${arch}.tar.xz")
+output=$(realpath "${output_dir}/sysroot-${variant}-${arch}.tar.zst")
 image_tag=$(tr '[:upper:]' '[:lower:]' <<<"sysroot-${variant}-${arch}")
 
 (cd "${sysroot_dir}"; \
@@ -73,5 +84,5 @@ if [[ "${os_name}" == "Linux" ]]; then
 elif [[ "${os_name}" == "Darwin" ]]; then
     readonly cpus="$(sysctl -n hw.ncpu)"
 fi
-(cd "${tmpdir}/sysroot"; tar --create --file /dev/stdout . | XZ_DEFAULTS="--threads ${cpus}" xz -9e > "${output}")
-shasum -a 256 "${output}"
+(cd "${tmpdir}/sysroot"; tar --create --file /dev/stdout . | zstd --ultra -22 -o "${output}")
+${SHASUM} "${output}"
